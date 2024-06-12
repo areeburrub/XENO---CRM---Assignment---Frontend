@@ -6,7 +6,7 @@ import {DataTable} from "./data-table";
 import { headers } from 'next/headers'
 import axios from "axios";
 
-async function getData(): Promise<void]> {
+async function getData(): Promise<void> {
 
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/orders`;
     const headersList = headers()
