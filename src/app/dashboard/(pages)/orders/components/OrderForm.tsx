@@ -47,7 +47,7 @@ const OrderForm = ({defaultData, handleSubmit}: { defaultData?:any, handleSubmit
         async function fetchCustomer(): Promise<Customer[]> {
 
             const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/customers`;
-            response = await axios.get(url, {
+            const response = await axios.get(url, {
                 maxBodyLength: Infinity,
                 headers: {
                     'Content-Type': 'application/json',
