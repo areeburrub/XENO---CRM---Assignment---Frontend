@@ -10,7 +10,7 @@ const Login = () =>{
             {
                 user ?
                     <>
-                        {user.displayName}
+                        {user.name}
                         <button onClick={logout}>Logout</button>
                     </>
                     :

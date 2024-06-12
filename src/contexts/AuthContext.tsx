@@ -2,8 +2,16 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import axios from 'axios';
 
+interface User {
+    id: string;
+    email: string;
+    name: string;
+    photo: string;
+}
+
 interface AuthContextProps {
-    user: any;
+    loading: boolean
+    user: User;
     login: () => void;
     logout: () => void;
 }
@@ -12,15 +20,20 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchUser = async () => {
+            setLoading(true);
             try {
                 const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login/success`;
                 const { data } = await axios.get(url,{withCredentials: true});
-                setUser(data.user._json);
+                console.log(data)
+                setUser(data.user);
             } catch (error) {
                 setUser(null);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -43,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ loading, user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
